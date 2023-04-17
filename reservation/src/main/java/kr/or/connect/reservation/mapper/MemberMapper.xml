@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.runeah.mapper.MemberMapper">
+
+	<!-- 리절트맵 요소 정의 -->
+	<resultMap type="Member" id="memberMap">
+		<id property="userNo" column="user_no"/>
+		<result property="userNo" column="user_no"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPw" column="user_pw"/>
+		<result property="userName" column="user_name"/>
+		<result property="job" column="job"/>
+		<result property="coin" column="coin"/>
+		<result property="enabled" column="enabled"/>
+		<result property="regDate" column="reg_date"/>
+		<result property="updDate" column="upd_date"/>
+		<result property="tuCount" column="tu_count"/>
+		<result property="tuDate" column="tu_date"/>
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
+	
+	<resultMap type="MemberAuth" id="authMap">
+		<result property="userNo" column="user_no"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	<!-- 권한 등록 처리 -->
+	<insert id="createAuth">
+		INSERT INTO member_auth
+			(
+			user_no,
+			auth
+			)
+		VALUES
+			(
+			#{userNo},
+			#{auth}
+			)
+	</insert>
+	<!-- 등록 처리 -->
+	<insert id="create" useGeneratedKeys="true" keyProperty="userNo">
+		INSERT INTO member
+			(
+			user_id,
+			user_pw,
+			user_name,
+			job
+			)
+		VALUES
+			(
+			#{userId},
+			#{userPw},
+			#{userName},
+			#{job}
+			)
+	</insert>
+	<!-- 사용자 아이디로 회원정보 조회 -->
+	<select id="readByUserId" resultMap="memberMap">
+		SELECT mem.user_no,
+			mem.user_id,
+			user_pw,
+			user_name,
+			job,
+			coin,
+			enabled,
+			reg_date,
+			upd_date,
+			auth
+		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.user_no = auth.user_no
+		WHERE mem.user_id = #{userId}
+	</select>
+	<!-- 사용자 아이디로 해당 사용자를 정식 사용자로 승격(users 및 authorities 테이블에 등록) -->
+	<insert id="confirm">
+		INSERT INTO users
+			(
+			username,
+			password
+			)	
+		VALUES
+			(
+			( SELECT user_id FROM member WHERE user_no = #{userNo} ),
+			( SELECT user_pw FROM member WHERE user_no = #{userNo} )
+			);
+	</insert>
+	<insert id="confirmAuth">
+		INSERT INTO authorities
+			(
+			username,
+			authority
+			)
+		VALUES
+			(
+			( SELECT user_id FROM member WHERE user_no = #{userNo} ),
+			( SELECT auth FROM member_auth WHERE user_no = #{userNo} )
+			);
+	</insert>
+	<!-- 상세 조회 -->
+	<select id="read" resultMap="memberMap">
+		SELECT mem.user_no,
+			mem.user_id,
+			user_pw,
+			user_name,
+			job,
+			coin,
+			reg_date,
+			upd_date,
+			auth
+		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.user_no = auth.user_no
+		WHERE mem.user_no = #{userNo}
+	</select>
+	
+	
+	<!-- getTuCount -->
+	<select id="getTuCount" resultMap="memberMap">
+		SELECT tu_count
+		FROM member
+		WHERE user_no = #{userNo}
+	</select>
+	
+	<!-- getTuDate -->
+	<select id="getTuDate" resultMap="memberMap">
+		SELECT tu_date
+		FROM member
+		WHERE user_no = #{userNo}
+	</select>
+	
+	
+	<!-- 수정 처리 -->
+	<update id="setTuDate">
+		UPDATE member
+		SET	tu_date = #{tuDate}
+		WHERE user_no = #{userNo}
+	</update>
+	
+	<!-- 수정 처리 -->
+	<update id="setTuCount">
+		UPDATE member
+		SET	tu_count = tu_count + 1
+		WHERE user_no = #{userNo}
+	</update>
+	
+	<!-- 수정 처리 -->
+	<update id="resetTuCount">
+		UPDATE member
+		SET	tu_count = 1
+		WHERE user_no = #{userNo}
+	</update>
+	
+</mapper>

@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+body,
+html {
+  min-height: 100%;
+}
+
+body {
+  min-width: 320px;
+  max-width: 414px;
+}
+
+html {
+  height: 100%;
+  background-color: #d4dadf;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: auto;
+  margin: 0 auto !important;
+  background-color: #e9ecef;
+  word-wrap: break-word;
+  word-break: break-word;
+
+}
+
+body {
+  max-width: 414px;
+
+}
+
+div {
+  width :380px;
+  margin : 0 auto;
+}
+
+ul,
+li {
+   list-style:none;
+   padding : 0px;
+ }
+
+.booking_login {
+  padding-top : 50px;
+}
+
+.login_header_sub {
+  border-bottom : 2px solid lightgray;
+  font-size : 18px;
+  padding-top : 20px;
+  padding-bottom : 10px;
+}
+
+
+
+.login_input {
+  width : 356px;
+  padding : 11px;
+  margin-top : 5px;
+   border : 1px solid lightgray;
+}
+
+input:focus {outline: 4px solid #87CEEB;}
+
+.label_form {
+  font-size : 16px;
+  font-weight :bold;
+  color : gray;
+}
+
+.warning_msg {
+  visibility : hidden;
+}
+
+.login_btn {
+  width : 380px;
+  padding : 10px;
+  color : #050A30;
+  font-size : 14px;
+  font-weight : bolder;
+  border : 2px solid #050A30;
+  cursor : pointer;
+}
+
+a {
+  text-decoration: none;
+  color : inherit;
+}
+
+.logo {
+	background-color : #050A30;
+	color : white;
+	font-weight : bolder;
+	padding : 0px 10px
+}
+
+.login_header {
+  text-align : center;
+}
+
+footer {
+  margin-top : 50px;
+  text-align : center;
+  font-size : 12px;
+  font-weight : 900;
+  color : gray;
+}
+
+.gototop {
+  display : block;
+  width : 414px;
+  padding-top : 20px;
+  padding-bottom : 20px;
+  border-bottom : 2px solid lightgray;
+}
+
+.lst_nav {
+  display : flex;
+  justify-content : center;
+}
+
+.lst_nav li {
+  padding : 5px 10px;
+  margin : 10px;
+  border : 1px solid gray;
+  color : gray;
+  font-size : 13px;
+  font-weight : bold;
+}

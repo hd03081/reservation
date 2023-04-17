@@ -1,0 +1,24 @@
+@charset "UTF-8";
+#registerForm ul {
+	display : flex;
+	flex-flow : column;
+}
+#registerForm ul li {
+	margin-bottom : 20px;
+	border-bottom : 2px solid lightgray;
+	position : relative;
+}
+#registerForm span, label {
+	display : block;
+	margin-bottom : 20px;
+}
+.login_btn{
+	margin-top : 20px;
+}
+.spanBtn {
+	display : inline-block;
+	position : absolute;
+	top : 0;
+	right : 0;
+	border : 2px solid gray;
+}
